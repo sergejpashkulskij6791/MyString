@@ -1,25 +1,25 @@
 ﻿#include <iostream>
 #include <cstring>
-
+using namespace std;
 class MyString {
 private:
     char* str;
     int size;
 
 public:
-    // Конструктор по умолчанию
+    // Default constructor
     MyString() {
         size = 80;
-        str = new char[size + 1]; // +1 для символа '\0' в конце строки
+        str = new char[size + 1]; // +1 for a '\0' character at the end of a string
     }
 
-    // Конструктор для создания строки произвольного размера
+    //Constructor for creating a string of arbitrary size
     MyString(int length) {
         size = length;
         str = new char[size + 1];
     }
 
-    // Конструктор, который инициализирует строку значением, полученным от пользователя
+    // Constructor that initializes a string with a value received from the user
     MyString(const char* inputStr) {
         size = strlen(inputStr);
         str = new char[size + 1];
@@ -27,88 +27,88 @@ public:
        // strcpy(str, inputStr);
     }
 
-    // Конструктор копирования
+    // copy constructor
     MyString(const MyString& other) {
         size = other.size;
         str = new char[size + 1];
         strcpy_s(str, size, other.str);
     }
 
-    // Метод для ввода строки с клавиатуры
+    //Method for entering a string from the keyboard
     void InputString() {
-        std::cout << "Введите строку: ";
-        std::cin.getline(str, size + 1);
+        cout << "Enter the string: ";
+        cin.getline(str, size + 1);
     }
 
-    // Метод для вывода строки на экран
+    //Method for displaying a string on the screen
     void OutputString() const {
-        std::cout << "Строка: " << str << std::endl;
+        cout << "Line: " << str << endl;
     }
 
-    // Метод для получения длины строки
+    //Method for getting string length
     int Length() const {
         return strlen(str);
     }
 
-    // Метод для проверки, начинается ли строка с заданного символа
+    // Method for checking if a string starts with a given character
     bool StartsWith(char ch) const {
         return str[0] == ch;
     }
 
-    // Метод для проверки, заканчивается ли строка заданным символом
+    // Method for checking if a string ends with a given character
     bool EndsWith(char ch) const {
         int len = strlen(str);
         return len > 0 && str[len - 1] == ch;
     }
 
-    // Метод для сравнения строки с заданной C-строкой
+    //Method for comparing a string with a given C-string
     bool Equal(const char* otherStr) const {
         return strcmp(str, otherStr) == 0;
     }
 
-    // Метод для получения указателя на строку
+    //Method for getting a pointer to a string
     const char* GetStr() const {
         return str;
     }
 
-    // Метод для установки значения строки
+    // Method for setting string value
     void SetStr(const char* newStr) {
-        delete[] str; // Освобождаем старую память
+        delete[] str; // Freeing up old memory
         size = strlen(newStr);
         str = new char[size + 1];
         strcpy_s(str, size, newStr);
     }
 
-    // Деструктор
+    // Destructor
     ~MyString() {
         delete[] str;
     }
 };
 
 int main() {
-    MyString s1; // Создание строки длиной 80 символов
-    s1.InputString(); // Ввод строки с клавиатуры
-    s1.OutputString(); // Вывод строки на экран
+    MyString s1; // Create a 80 character string
+    s1.InputString(); // Entering a string from the keyboard
+    s1.OutputString(); //Printing a string to the screen
 
-    MyString s2(50); // Создание строки длиной 50 символов
+    MyString s2(50); // Create a 50 character string
     s2.InputString();
     s2.OutputString();
 
-    MyString s3("Hello"); // Создание строки и инициализация значением
+    MyString s3("Hello"); // Creating a String and Initializing it with a Value
     s3.OutputString();
 
-    MyString s4(s3); // Создание строки на основе существующей строки
+    MyString s4(s3); // Create a string from an existing string
     s4.OutputString();
 
-    std::cout << "Длина строки s4: " << s4.Length() << std::endl;
-    std::cout << "Строка s4 начинается с символа 'H': " << s4.StartsWith('H') << std::endl;
-    std::cout << "Строка s4 заканчивается символом 'o': " << s4.EndsWith('o') << std::endl;
-    std::cout << "Строка s4 равна \"Hello\": " << s4.Equal("Hello") << std::endl;
+    cout << "String length s4: " << s4.Length() << endl;
+    cout << "The string s4 starts with the character 'H': " << s4.StartsWith('H') << endl;
+    cout << "The string s4 ends with an 'o': " << s4.EndsWith('o') << endl;
+    cout << "The string s4 is \"Hello\": " << s4.Equal("Hello") << endl;
 
-    const char* strPtr = s4.GetStr(); // Получение указателя на строку
-    std::cout << "Указатель на строку s4: " << strPtr << std::endl;
+    const char* strPtr = s4.GetStr(); // Getting a pointer to a string
+    cout << "Pointer to string s4: " << strPtr << endl;
 
-    s4.SetStr("New String"); // Изменение значения строки
+    s4.SetStr("New String"); // Change the value of a string
     s4.OutputString();
 
     return 0;
